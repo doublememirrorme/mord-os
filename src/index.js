@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import MordOS from './MordOS';
+import './index.sass';
+import MordOS from './mord-os';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
