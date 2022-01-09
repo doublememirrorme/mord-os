@@ -8,7 +8,7 @@ import './index.sass'
 
 const AuthOverlay = () => {
   const { logIn, user } = useAuth()
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState(user)
   const [password, setPassword] = useState('')
   
   const handleSubmit = e => {
@@ -16,7 +16,7 @@ const AuthOverlay = () => {
     logIn(username, password)
   }
 
-  return user ? null : (
+  return (
     <>
       <Overlay />
       <Modal className="auth-modal">

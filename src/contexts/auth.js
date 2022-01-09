@@ -10,20 +10,22 @@ const AuthContext = createContext({})
 export const useAuth = () => useContext(AuthContext)
 
 const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState('')
+  const { localStorage } = window
+  const [user, setUser] = useState(localStorage.getItem('user') || '')
 
-  const logIn = (email = '', password = '') => (
-    USERS[email] === password && setUser(email)
-  )
+  const logIn = (email = '', password = '') => {
+    if (USERS[email] === password) {
+      setUser(email)
+      localStorage.setItem('user', email)
+    }
+  }
 
   return (
     <AuthContext.Provider value={{
       logIn,
       user
     }}>
-      <AuthOverlay>
-        {children}
-      </AuthOverlay>
+      {!user ? <AuthOverlay /> : children}
     </AuthContext.Provider>
   )
 }
