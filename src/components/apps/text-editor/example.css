@@ -1,9 +1,11 @@
 .RichEditor-root {
   background: #fff;
   /* border: 1px solid #ddd; */
-  font-family: 'Georgia', serif;
+  font-family: inherit;
   font-size: 14px;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .RichEditor-editor {
@@ -11,6 +13,7 @@
   cursor: text;
   font-size: 16px;
   margin-top: 10px;
+  overflow: scroll;
 }
 
 .RichEditor-editor .public-DraftEditorPlaceholder-root,

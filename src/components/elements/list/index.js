@@ -1,9 +1,9 @@
 import React from 'react'
-import ListItem from './item'
+import './index.sass'
 
-const List = ({ items = [] }, index) => (
-  <ul>
-    {items.map(() => <ListItem key={index} />)}
+const List = ({ children }, index) => (
+  <ul className='list'>
+    {children}
   </ul>
 )
 

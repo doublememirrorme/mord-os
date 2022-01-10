@@ -8,30 +8,38 @@ import './index.sass'
 
 const AuthOverlay = () => {
   const { logIn, user } = useAuth()
-  const [username, setUsername] = useState(user)
+  const [email, setEmail] = useState(user)
   const [password, setPassword] = useState('')
   
   const handleSubmit = e => {
     e.preventDefault()
-    logIn(username, password)
+    logIn(email, password)
   }
 
   return (
     <>
       <Overlay />
-      <Modal className="auth-modal">
+      <Modal
+        className="auth-modal"
+        default={{}}
+        style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
+        disableDragging
+        disableHeader
+      >
         <form className='auth-form' onSubmit={handleSubmit}>
           <Input
-            type='text'
-            value={username}
-            onChange={e => setUsername(e.currentTarget.value)} />
+            type='email'
+            value={email}
+            placeholder="Email"
+            onChange={e => setEmail(e.currentTarget.value)} />
 
           <Input
             type="password"
             value={password}
+            placeholder="Password"
             onChange={e => setPassword(e.currentTarget.value)} />
           
-          <Button type='submit'>Log in</Button>
+          <Button type='submit' disabled={!email || !password}>Log in</Button>
         </form>
       </Modal>
     </>

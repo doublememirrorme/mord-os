@@ -1,19 +1,25 @@
 import React from "react";
 import {Editor, EditorState, RichUtils, getDefaultKeyBinding} from 'draft-js';
 import './example.css';
+import Button from "../../elements/button";
 
 class RichEditorExample extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {editorState: EditorState.createEmpty()};
+    this.state = {
+      file: props.file,
+      editorState: props.editorState || EditorState.createEmpty()
+    };
+    this.editorRef = React.createRef();
 
-    this.focus = () => this.refs.editor.focus();
+    this.focus = () => this.editorRef.current.focus();
     this.onChange = (editorState) => this.setState({editorState});
 
     this.handleKeyCommand = this._handleKeyCommand.bind(this);
     this.mapKeyToEditorCommand = this._mapKeyToEditorCommand.bind(this);
     this.toggleBlockType = this._toggleBlockType.bind(this);
     this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
+    this.handleSave = this._handleSave.bind(this);
   }
 
   _handleKeyCommand(command, editorState) {
@@ -23,6 +29,13 @@ class RichEditorExample extends React.Component {
       return true;
     }
     return false;
+  }
+
+  async _handleSave() {
+    console.log(this.state)
+    let stream = await this.state.file?.createWritable()
+    await stream.write(this.state.editorState.getCurrentContent())
+    await stream.close()
   }
 
   _mapKeyToEditorCommand(e) {
@@ -81,6 +94,7 @@ class RichEditorExample extends React.Component {
           editorState={editorState}
           onToggle={this.toggleInlineStyle}
         />
+        <Button onClick={this.handleSave}>Save</Button>
         <div className={className} onClick={this.focus}>
           <Editor
             blockStyleFn={getBlockStyle}
@@ -90,7 +104,7 @@ class RichEditorExample extends React.Component {
             keyBindingFn={this.mapKeyToEditorCommand}
             onChange={this.onChange}
             placeholder="Tell a story..."
-            ref="editor"
+            ref={this.editorRef}
             spellCheck={true}
           />
         </div>
