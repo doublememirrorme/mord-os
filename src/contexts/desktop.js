@@ -25,12 +25,12 @@ export const useDesktop = () => useContext(DesktopContext)
 const DesktopContextProvider = () => {
   const [apps, setApps] = useState(APPS)
 
-  const openApp = async (name, file) => {
-    setApps(await Promise.all(apps.map(
-      async (app) => app.name === name
-        ? {...app, open: true, data: await file?.text(), file: await file}
+  const openApp = (name) => {
+    setApps(apps.map(
+      (app) => app.name === name
+        ? {...app, open: true}
         : app
-    )))
+    ))
   }
 
   const closeApp = name => {

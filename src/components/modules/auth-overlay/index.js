@@ -22,7 +22,11 @@ const AuthOverlay = () => {
       <Modal
         className="auth-modal"
         default={{}}
-        style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
+        style={{
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
         disableDragging
         disableHeader
       >

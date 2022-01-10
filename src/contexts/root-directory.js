@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { get, set } from 'idb-keyval'
-import { flushSync } from 'react-dom'
+// import { get, set } from 'idb-keyval'
 
 const RootDirectoryContext = createContext({})
 
@@ -26,25 +25,15 @@ const RootDirectoryContextProvider = ({ children }) => {
   const [rootDirHandler, setRootDirHandler] = useState(null)
   const [openDir, setOpenDir] = useState(null)
   const [breadcrumbs, setBreadcrumbs] = useState([])
+  const [fileHandler, setFileHandler] = useState(null)
 
   useEffect(() => {
     setBreadcrumbs([rootDirHandler])
   }, [rootDirHandler])
 
   useEffect(() => {
-    console.log('bbb', breadcrumbs, breadcrumbs.length)
     breadcrumbs.length && setOpenDir(breadcrumbs[breadcrumbs.length - 1])
   }, [breadcrumbs])
-
-  // useEffect(() => {
-  //   if (breadcrumbs[breadcrumbs.length - 1] === openDir) {
-  //     setBreadcrumbs([...breadcrumbs, openDir])
-  //   }
-  // }, [openDir])
-
-  // useEffect(() => {
-  //   openDir && setBreadcrumbs(() => [...breadcrumbs, openDir])
-  // }, [openDir])
 
   // useEffect(() => {
   //   const storeHandler = async () => {
@@ -73,7 +62,9 @@ const RootDirectoryContextProvider = ({ children }) => {
       setOpenDir,
       breadcrumbs,
       setBreadcrumbs,
-      openDir
+      openDir,
+      fileHandler,
+      setFileHandler
     }}>
       {children}
     </RootDirectoryContext.Provider>

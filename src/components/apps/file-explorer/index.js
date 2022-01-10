@@ -12,16 +12,14 @@ const ICONS = {
 
 const FileExplorer = () => {
   const [files, setFiles] = useState([])
-  const { rootDirHandler, setRootDirHandler, openDir, setOpenDir, setBreadcrumbs, breadcrumbs } = useRootDirectory()
+  const { openDir, setBreadcrumbs, breadcrumbs, setFileHandler } = useRootDirectory()
   const { openApp } = useDesktop()
 
   useEffect(() => {
     const getFiles = async () => {
       const promises = []
       for await (const entry of openDir?.values()) {
-        promises.push(
-          entry.kind !== 'file' ? entry : entry.getFile()
-        )
+        promises.push(entry)
       }
       
       setFiles(await Promise.all(promises))
@@ -31,8 +29,10 @@ const FileExplorer = () => {
   }, [openDir])
 
   const handleDoubleClick = async (file) => {
-    if (file.kind !== 'directory')
-      openApp('Text Editor', file)
+    if (file.kind !== 'directory') {
+      setFileHandler(await file)
+      openApp('Text Editor')
+    }
 
     else {
       const dir = await openDir.getDirectoryHandle(file.name)

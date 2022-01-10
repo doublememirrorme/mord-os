@@ -7,7 +7,6 @@ class RichEditorExample extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: props.file,
       editorState: props.editorState || EditorState.createEmpty()
     };
     this.editorRef = React.createRef();
@@ -32,10 +31,10 @@ class RichEditorExample extends React.Component {
   }
 
   async _handleSave() {
-    console.log(this.state)
-    let stream = await this.state.file?.createWritable()
-    await stream.write(this.state.editorState.getCurrentContent())
-    await stream.close()
+    this.props.onSave(this.state.editorState)
+    // let stream = await this.state.file?.createWritable()
+    // await stream.write(this.state.editorState.getCurrentContent())
+    // await stream.close()
   }
 
   _mapKeyToEditorCommand(e) {

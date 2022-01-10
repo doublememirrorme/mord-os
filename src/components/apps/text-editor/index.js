@@ -1,19 +1,44 @@
-import React from 'react'
-import { EditorState, ContentState} from 'draft-js';
-import 'draft-js/dist/Draft.css';
-import RichEditorExample from './example-copy';
+import React, { useEffect, useState, useRef } from 'react'
+import { useRootDirectory } from '../../../contexts/root-directory';
+import Button from '../../elements/button';
+import './index.sass'
 
-const TextEditor = ({ data = '', file }) => {
-  const [editorState, setEditorState] = React.useState(
-    () => EditorState.createWithContent(ContentState.createFromText(data)),
-  )
+const TextEditor = () => {
+  const { fileHandler } = useRootDirectory()
+  const ref = useRef(null)
+  const [value, setValue] = useState('')
+
+  useEffect(() => {
+    const getText = async () => {
+      const file = await fileHandler.getFile()
+      const text = await file.text()
+      setValue(text)
+    }
+
+    fileHandler && getText()
+  }, [fileHandler])
+
+  const handleSave = async () => {
+    const stream = await fileHandler.createWritable()
+    await stream.write(ref.current.value)
+    await stream.close()
+  }
 
   return (
-    <RichEditorExample
-      file={file}
-      editorState={editorState}
-      onChange={setEditorState}
-    />);
+    <>
+      <textarea
+        className='text-editor'
+        ref={ref}
+        defaultValue={value}
+      />
+      <Button
+        className='text-editor__btn--save'
+        onClick={handleSave}
+      >
+        Save
+      </Button>
+    </>
+  );
 }
 
 export default TextEditor
