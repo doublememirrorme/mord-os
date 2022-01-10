@@ -4,6 +4,7 @@ import TextEditor from '../components/apps/text-editor'
 import Browser from '../components/apps/browser'
 import Desktop from '../components/elements/desktop'
 import RSSReader from '../components/apps/rss-reader'
+import Gallery from '../components/apps/gallery'
 
 const APPS = [
   {
@@ -28,6 +29,12 @@ const APPS = [
     name: 'RSS Reader',
     icon: 'icons/browser.svg',
     component: RSSReader,
+    open: false
+  },
+  {
+    name: 'Gallery',
+    icon: 'icons/photo.svg',
+    component: Gallery,
     open: false
   },
 ]

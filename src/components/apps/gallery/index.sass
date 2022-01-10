@@ -1,0 +1,22 @@
+.gallery
+  display: flex
+  flex-direction: column
+  height: 100%
+
+.image-view
+  display: block
+  height: calc(100% - 243px)
+  width: 100%
+  object-fit: contain
+  background-color: #333
+
+.image-view__track
+  display: flex
+  overflow-x: scroll
+  list-style: none
+  padding: 0
+  flex-wrap: no-wrap
+  justify-self: bottom
+
+.image-view__load-more-btn
+  position: absolute
