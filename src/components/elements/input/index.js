@@ -1,9 +1,9 @@
-import React from 'react'
-import classNames from 'classnames'
-import './index.sass'
+import React from "react";
+import classNames from "classnames";
+import "./index.sass";
 
 const Input = ({ className, value: propsValue, ...props }) => (
-  <input className={classNames('input', className)} {...props} />
-)
+  <input className={classNames("input", className)} {...props} />
+);
 
-export default Input
+export default Input;

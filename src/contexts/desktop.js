@@ -1,72 +1,74 @@
-import React, { createContext, useContext, useState } from 'react'
-import FileExplorer from '../components/apps/file-explorer'
-import TextEditor from '../components/apps/text-editor'
-import Browser from '../components/apps/browser'
-import Desktop from '../components/elements/desktop'
-import RSSReader from '../components/apps/rss-reader'
-import Gallery from '../components/apps/gallery'
+import React, { createContext, useContext, useState } from "react";
+import FileExplorer from "../components/apps/file-explorer";
+import TextEditor from "../components/apps/text-editor";
+import Browser from "../components/apps/browser";
+import Desktop from "../components/elements/desktop";
+import RSSReader from "../components/apps/rss-reader";
+import Gallery from "../components/apps/gallery";
 
 const APPS = [
   {
-    name: 'File Explorer',
-    icon: 'icons/folder.svg',
+    name: "File Explorer",
+    icon: "icons/folder.svg",
     component: FileExplorer,
-    open: false
+    open: false,
   },
   {
-    name: 'Text Editor',
-    icon: 'icons/file-1.svg',
+    name: "Text Editor",
+    icon: "icons/file-1.svg",
     component: TextEditor,
-    open: false
+    open: false,
   },
   {
-    name: 'Browser',
-    icon: 'icons/browser.svg',
+    name: "Browser",
+    icon: "icons/browser.svg",
     component: Browser,
-    open: false
+    open: false,
   },
   {
-    name: 'RSS Reader',
-    icon: 'icons/archive.svg',
+    name: "RSS Reader",
+    icon: "icons/archive.svg",
     component: RSSReader,
-    open: false
+    open: false,
   },
   {
-    name: 'Gallery',
-    icon: 'icons/photo.svg',
+    name: "Gallery",
+    icon: "icons/photo.svg",
     component: Gallery,
-    open: false
+    open: false,
   },
-]
+];
 
-const DesktopContext = createContext({})
+const DesktopContext = createContext({});
 
-export const useDesktop = () => useContext(DesktopContext)
+export const useDesktop = () => useContext(DesktopContext);
 
 const DesktopContextProvider = () => {
-  const [apps, setApps] = useState(APPS)
+  const [apps, setApps] = useState(APPS);
 
   const openApp = (name) => {
-    setApps(apps.map(
-      (app) => app.name === name
-        ? {...app, open: true}
-        : app
-    ))
-  }
+    setApps(
+      apps.map((app) => (app.name === name ? { ...app, open: true } : app))
+    );
+  };
 
-  const closeApp = name => {
-    setApps(apps.map(
-      (app) => app.name === name ? {...app, open: false} : app
-    ))
-  }
+  const closeApp = (name) => {
+    setApps(
+      apps.map((app) => (app.name === name ? { ...app, open: false } : app))
+    );
+  };
 
   return (
-    <DesktopContext.Provider value={{
-      apps, openApp, closeApp
-    }}>
+    <DesktopContext.Provider
+      value={{
+        apps,
+        openApp,
+        closeApp,
+      }}
+    >
       <Desktop />
     </DesktopContext.Provider>
-  )
-}
+  );
+};
 
-export default DesktopContextProvider
+export default DesktopContextProvider;

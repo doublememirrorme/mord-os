@@ -1,10 +1,13 @@
-import React from 'react'
-import './index.sass'
+import React from "react";
+import "./index.sass";
 
-const Background = ({children}) => (
-  <div style={{ backgroundImage: `url("/background.jpg")` }} className='background'>
+const Background = ({ children }) => (
+  <div
+    style={{ backgroundImage: `url("/background.jpg")` }}
+    className="background"
+  >
     {children}
   </div>
-)
+);
 
-export default Background
+export default Background;

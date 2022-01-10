@@ -1,8 +1,8 @@
-import Background from './components/elements/background'
-import DesktopContextProvider from './contexts/desktop'
-import AuthContextProvider from './contexts/auth'
-import './mord-os.sass'
-import RootDirectoryContextProvider from './contexts/root-directory'
+import Background from "./components/elements/background";
+import DesktopContextProvider from "./contexts/desktop";
+import AuthContextProvider from "./contexts/auth";
+import "./mord-os.sass";
+import RootDirectoryContextProvider from "./contexts/root-directory";
 
 const MordOS = () => {
   return (
@@ -13,7 +13,7 @@ const MordOS = () => {
         </AuthContextProvider>
       </RootDirectoryContextProvider>
     </Background>
-  )
-}
+  );
+};
 
-export default MordOS
+export default MordOS;
