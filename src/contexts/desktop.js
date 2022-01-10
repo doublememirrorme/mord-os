@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState } from 'react'
 import FileExplorer from '../components/apps/file-explorer'
 import TextEditor from '../components/apps/text-editor'
+import Browser from '../components/apps/browser'
 import Desktop from '../components/elements/desktop'
+import RSSReader from '../components/apps/rss-reader'
 
 const APPS = [
   {
@@ -14,6 +16,18 @@ const APPS = [
     name: 'Text Editor',
     icon: 'icons/file-1.svg',
     component: TextEditor,
+    open: false
+  },
+  {
+    name: 'Browser',
+    icon: 'icons/browser.svg',
+    component: Browser,
+    open: false
+  },
+  {
+    name: 'RSS Reader',
+    icon: 'icons/browser.svg',
+    component: RSSReader,
     open: false
   },
 ]

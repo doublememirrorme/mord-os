@@ -4,7 +4,7 @@ import Button from '../../elements/button';
 import './index.sass'
 
 const TextEditor = () => {
-  const { fileHandler } = useRootDirectory()
+  const { fileHandler, setFileHandler } = useRootDirectory()
   const ref = useRef(null)
   const [value, setValue] = useState('')
 
@@ -18,10 +18,16 @@ const TextEditor = () => {
     fileHandler && getText()
   }, [fileHandler])
 
+  useEffect(() => () => {
+    setFileHandler(null)
+  }, []);
+
   const handleSave = async () => {
-    const stream = await fileHandler.createWritable()
-    await stream.write(ref.current.value)
-    await stream.close()
+    if (fileHandler) {
+      const stream = await fileHandler.createWritable()
+      await stream.write(ref.current.value)
+      await stream.close()
+    }
   }
 
   return (
