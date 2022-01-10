@@ -20,6 +20,7 @@ const TextEditor = () => {
 
   useEffect(() => () => {
     setFileHandler(null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSave = async () => {
@@ -27,6 +28,11 @@ const TextEditor = () => {
       const stream = await fileHandler.createWritable()
       await stream.write(ref.current.value)
       await stream.close()
+    }
+
+    else {
+      const handler = await window.showSaveFilePicker()
+      setFileHandler(handler)
     }
   }
 

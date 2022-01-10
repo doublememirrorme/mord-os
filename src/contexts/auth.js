@@ -20,10 +20,12 @@ const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(localStorage.getItem('user') || '')
 
   const logIn = (email = '', password = '') => {
-    if (USERS[email]?.password === password) {
+    if (!USERS[email]) throw new Error('No such user')
+    if (USERS[email].password === password) {
       setUser(email)
       localStorage.setItem('user', email)
-    }
+    } else throw new Error('Wrong passwordd')
+
   }
 
   return (

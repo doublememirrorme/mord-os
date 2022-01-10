@@ -10,10 +10,16 @@ const AuthOverlay = () => {
   const { logIn, user } = useAuth()
   const [email, setEmail] = useState(user)
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   
   const handleSubmit = e => {
     e.preventDefault()
-    logIn(email, password)
+    try {
+      logIn(email, password)
+    } catch (e) {
+      console.log(e)
+      setError(e.message)
+    }
   }
 
   return (
@@ -42,6 +48,10 @@ const AuthOverlay = () => {
             value={password}
             placeholder="Password"
             onChange={e => setPassword(e.currentTarget.value)} />
+
+          <p className='auth-form__error'>
+            <small>{error}</small>
+          </p>
           
           <Button type='submit' disabled={!email || !password}>Log in</Button>
         </form>

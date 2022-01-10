@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
-// import { get, set } from 'idb-keyval'
+import { get, set } from 'idb-keyval'
 
 const RootDirectoryContext = createContext({})
 
@@ -11,14 +11,14 @@ const verifyPermissions = async (fileHandle, readWrite) => {
     options.mode = 'readWrite'
 
   if ((await fileHandle.queryPermission(options)) === 'granted') {
-    return true;
+    return true
   }
 
   if ((await fileHandle.requestPermission(options)) === 'granted') {
-    return true;
+    return true
   }
 
-  return false;
+  return false
 }
 
 const RootDirectoryContextProvider = ({ children }) => {
@@ -35,24 +35,30 @@ const RootDirectoryContextProvider = ({ children }) => {
     breadcrumbs.length && setOpenDir(breadcrumbs[breadcrumbs.length - 1])
   }, [breadcrumbs])
 
-  // useEffect(() => {
-  //   const storeHandler = async () => {
-  //     try {
-  //       const handler = await get('root')
-  //       console.log(handler)
-  //       if (handler) {
-  //         // verifyPermissions(handler)
-  //         setRootDirHandler(handler)
-  //         return
-  //       }
-  //       await set('root', rootDirHandler)
-  //     } catch (e) {
-  //       console.log(e.name, e.message)
-  //     }
-  //   }
+  useEffect(() => {
+    const storeHandler = async () => {
+      try {
+        const handler = await get('root')
 
-  //   !rootDirHandler && storeHandler()
-  // }, [rootDirHandler])
+        if (handler) {
+          verifyPermissions(handler)
+          setRootDirHandler(handler)
+        }
+      } catch (e) {
+        console.log(e.name, e.message)
+      }
+    }
+
+    storeHandler()
+  }, [])
+
+  useEffect(() => {
+    const storeHandler = async () => {
+      await set('root', rootDirHandler)
+    }
+
+    storeHandler()
+  }, [rootDirHandler])
 
   return (
     <RootDirectoryContext.Provider value={{

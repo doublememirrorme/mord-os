@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react'
-import Button from '../../elements/button'
 import './index.sass'
 import Thumbnail from './thumbnail'
 
@@ -33,18 +32,8 @@ const Gallery = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images])
 
-  useEffect(() => { console.log(images) }, [images])
-
   const handleClick = (image) => {
     setSelectedImage(image)
-  }
-
-  const handleUpdate = () => {
-    setPaginated([
-      ...paginated,
-      ...images.slice(sliceIndex, sliceIndex + PER_PAGE
-    )])
-    setSliceIndex(sliceIndex + PER_PAGE)
   }
 
   const handleScroll = () => {

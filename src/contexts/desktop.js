@@ -27,7 +27,7 @@ const APPS = [
   },
   {
     name: 'RSS Reader',
-    icon: 'icons/browser.svg',
+    icon: 'icons/archive.svg',
     component: RSSReader,
     open: false
   },

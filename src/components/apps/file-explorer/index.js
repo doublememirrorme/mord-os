@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react"
+import {DndContext} from '@dnd-kit/core'
 import { useDesktop } from "../../../contexts/desktop"
 import { useRootDirectory } from "../../../contexts/root-directory"
 import List from "../../elements/list"
@@ -40,25 +41,48 @@ const FileExplorer = () => {
     }
   }
 
+  const handleClick = async (file) => {
+    if (window.innerWidth < 750) {
+      if (file.kind !== 'directory') {
+        setFileHandler(await file)
+        openApp('Text Editor')
+      }
+  
+      else {
+        const dir = await openDir.getDirectoryHandle(file.name)
+        setBreadcrumbs([...breadcrumbs, dir])
+      }
+    }
+  }
+
+  const handleSort = (a, b) => a.kind === b.kind
+    ? a.name < b.name
+      ? -1
+      : a.name > b.name ? 1 : 0
+    : a.kind === 'directory' ? -1 : 1
+
   return (
     <>
       <Breadcrumbs />
-      <List>
-        {files.map((file, index) => {
-          const { name, kind, type } = file
+      <DndContext>
+        <List>
+          {files.sort(handleSort).map((file, index) => {
+            const { name, kind, type } = file
 
-          return (
-            <ListItem
-              className='file-explorer--item'
-              icon={ICONS[kind ? kind : type] || ICONS['default']}
-              key={index}
-              onDoubleClick={() => handleDoubleClick(file)}
-            >
-              {name}
-            </ListItem>
-          )
-        })}
-      </List>
+            return (
+              <ListItem
+                className='file-explorer--item'
+                icon={ICONS[kind ? kind : type] || ICONS['default']}
+                key={index}
+                onDoubleClick={() => handleDoubleClick(file)}
+                onPointerUp={() => handleClick(file)}
+              >
+                {name}
+              </ListItem>
+            )
+          })}
+        </List>
+      </DndContext>
     </>
   )
 }

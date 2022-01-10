@@ -9,6 +9,11 @@
   min-width: fit-content
   min-height: fit-content
 
+  @media screen and (max-width: 750px)
+    widht: 100% !important
+    height: auto !important
+    top: 50% !important
+    transform: translateY(-50%) !important
 
 .auth-form
   display: flex
@@ -16,3 +21,7 @@
 
   input
     margin-bottom: 8px
+
+.auth-form__error
+  margin: 0 0 8px
+  color: red

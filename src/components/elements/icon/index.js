@@ -6,10 +6,17 @@ import './index.sass'
 const Icon = ({ name, icon }, index) => {
   const { openApp } = useDesktop()
 
-  const handleDoubleClick = e => openApp(name)
+  const handleDoubleClick = () => openApp(name)
+
+  const handleClick = () => window.innerWidth < 750 && openApp(name)
 
   return (
-    <div className='icon' onDoubleClick={handleDoubleClick} key={index}>
+    <div
+      className='icon'
+      onDoubleClick={handleDoubleClick}
+      onPointerDown={handleClick}
+      key={index}
+    >
       <img src={icon} alt={name} className='icon__image'/>
 
       {name}

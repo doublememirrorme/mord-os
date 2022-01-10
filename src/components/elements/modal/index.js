@@ -23,8 +23,7 @@ const Modal = ({
           width: 500,
           height: 400
         }}
-        
-        disableDragging={disableDragging}
+        disableDragging={disableDragging || window.innerWidth < 750}
         dragHandleClassName="modal__header"
         {...props}
       >

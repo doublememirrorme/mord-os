@@ -2,7 +2,7 @@ import React from "react"
 import Modal from "../../elements/modal"
 import { useDesktop } from '../../../contexts/desktop'
 
-const AppContainer = ({name, open, component: Component, data}) => {
+const AppContainer = ({name = '', open, component: Component, data}) => {
   const { closeApp } = useDesktop()
 
   const handleClose = () => {
@@ -10,7 +10,11 @@ const AppContainer = ({name, open, component: Component, data}) => {
   }
 
   return !open ? null : (
-    <Modal title={name} onClose={handleClose}>
+    <Modal
+      title={name}
+      onClose={handleClose}
+      key={name.toLowerCase().replace(' ', '-')}
+    >
       <Component data={data} />
     </Modal>
   )
