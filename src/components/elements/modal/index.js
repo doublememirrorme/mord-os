@@ -10,6 +10,7 @@ const Modal = ({
   disableDragging = false,
   disableHeader = false,
   actionButton = null,
+  backButton = null,
   className,
   ...props
 }) => {
@@ -29,7 +30,11 @@ const Modal = ({
       >
         {!disableHeader && (
           <header className="modal__header">
-            {title}
+            <div>
+              {backButton}
+
+              {title}
+            </div>
 
             <div className="modal__btn--close" onClick={handleClose} />
           </header>

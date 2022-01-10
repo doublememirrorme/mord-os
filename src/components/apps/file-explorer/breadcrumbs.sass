@@ -1,0 +1,21 @@
+.breadcrumbs
+  padding: 8px 16px
+  border-bottom: 1px solid #ccc
+  background-color: #efefef
+
+.breadcrumbs__crumb
+  &:hover
+    cursor: pointer
+
+  &::after
+    content: '>'
+    font-weight: normal
+    margin: 0 4px
+    text-decoration: none
+
+  &:first-of-type
+    font-weight: bold
+
+  &:last-of-type
+    &::after
+      display: none

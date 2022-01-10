@@ -3,6 +3,7 @@ import { useDesktop } from "../../../contexts/desktop"
 import { useRootDirectory } from "../../../contexts/root-directory"
 import List from "../../elements/list"
 import ListItem from "../../elements/list/item"
+import Breadcrumbs from "./breadcrumbs"
 
 const ICONS = {
   directory: 'folder.svg',
@@ -11,14 +12,13 @@ const ICONS = {
 
 const FileExplorer = () => {
   const [files, setFiles] = useState([])
-  const { rootDirHandler } = useRootDirectory()
+  const { rootDirHandler, setRootDirHandler, openDir, setOpenDir, setBreadcrumbs, breadcrumbs } = useRootDirectory()
   const { openApp } = useDesktop()
 
   useEffect(() => {
     const getFiles = async () => {
       const promises = []
-      for await (const entry of rootDirHandler.values()) {
-        console.dir(entry)
+      for await (const entry of openDir?.values()) {
         promises.push(
           entry.kind !== 'file' ? entry : entry.getFile()
         )
@@ -27,33 +27,39 @@ const FileExplorer = () => {
       setFiles(await Promise.all(promises))
     }
 
-    getFiles()
-  }, [rootDirHandler])
+    openDir && getFiles()
+  }, [openDir])
 
-  useEffect(() => {console.log(files)}, [files])
+  const handleDoubleClick = async (file) => {
+    if (file.kind !== 'directory')
+      openApp('Text Editor', file)
 
-  const handleDoubleClick = (file) => {
-    console.log(file)
-    openApp('Text Editor', file)
+    else {
+      const dir = await openDir.getDirectoryHandle(file.name)
+      setBreadcrumbs([...breadcrumbs, dir])
+    }
   }
 
   return (
-    <List>
-      {files.map((file, index) => {
-        const { name, kind, type } = file
+    <>
+      <Breadcrumbs />
+      <List>
+        {files.map((file, index) => {
+          const { name, kind, type } = file
 
-        return (
-          <ListItem
-            className='file-explorer--item'
-            icon={ICONS[kind ? kind : type] || ICONS['default']}
-            key={index}
-            onDoubleClick={() => handleDoubleClick(file)}
-          >
-            {name}
-          </ListItem>
-        )
-      })}
-    </List>
+          return (
+            <ListItem
+              className='file-explorer--item'
+              icon={ICONS[kind ? kind : type] || ICONS['default']}
+              key={index}
+              onDoubleClick={() => handleDoubleClick(file)}
+            >
+              {name}
+            </ListItem>
+          )
+        })}
+      </List>
+    </>
   )
 }
 

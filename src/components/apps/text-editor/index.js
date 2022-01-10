@@ -3,12 +3,11 @@ import { EditorState, ContentState} from 'draft-js';
 import 'draft-js/dist/Draft.css';
 import RichEditorExample from './example-copy';
 
-const TextEditor = ({ data, file }) => {
+const TextEditor = ({ data = '', file }) => {
   const [editorState, setEditorState] = React.useState(
     () => EditorState.createWithContent(ContentState.createFromText(data)),
   )
 
-  console.dir(data)
   return (
     <RichEditorExample
       file={file}
